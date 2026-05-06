@@ -59,6 +59,13 @@ def get_cli_help(bin_name):
         return f"Error running {bin_name}: {e}"
 
 def generate():
+    try:
+        with open("examples.py", "r", encoding="utf-8") as f:
+            example_content = f.read()
+    except FileNotFoundError:
+        example_content = "# examples.py not found"
+
+    # 2. Build the Header
     lines = [
         "# rman_py",
         "Python bindings for the Riot Manifest and Bundle toolkit.",
@@ -68,6 +75,15 @@ def generate():
         "pip install .",
         "```",
         "",
+        "## Usage Examples",
+        "Below are examples of basic usage for all available functions.",
+        "```python",
+        example_content.strip(),
+        "```",
+        "",
+        "## API Reference",
+        "Detailed parameter list for each function. Python argument names match original CLI flags using `snake_case`.",
+        ""
     ]
 
     for sub_name, funcs in TOOLS.items():
