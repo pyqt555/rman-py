@@ -132,6 +132,28 @@ Optional arguments:
 
 ## Module: `rman_py.manifest`
 
+### `manifest.list_bundles`
+**Python Usage:**
+```python
+rman_py.manifest.list_bundles(inputs: collections.abc.Sequence[str], format: str = '/{bundleId}.bundle') -> None
+```
+**Description & CLI Arguments:**
+```text
+Usage: rman-bl.exe [-h] [--format VAR] input
+
+Lists bundle names used in manifest.
+
+Positional arguments:
+  input        	Manifest file(s) or folder(s) to read from. [nargs: 0 or more] [required]
+
+Optional arguments:
+  -h, --help   	shows help message and exits 
+  -v, --version	prints version information and exits 
+  --format     	Format output. [default: "/{bundleId}.bundle"]
+```
+
+---
+
 ### `manifest.check`
 **Python Usage:**
 ```python

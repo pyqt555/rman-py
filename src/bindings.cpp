@@ -798,7 +798,7 @@ PYBIND11_MODULE(rman_py, m) {
     );
 
 
-    m_manifest.def("bundle_list", &manifest_bundle_list,
+    m_manifest.def("list_bundles", &manifest_bundle_list,
         py::arg("inputs"),
         py::arg("format") = "/{bundleId}.bundle",
         py::call_guard<py::scoped_ostream_redirect, py::scoped_estream_redirect>(),
