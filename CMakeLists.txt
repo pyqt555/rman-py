@@ -4,8 +4,17 @@ project(rman LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+if(MSVC)
+    add_compile_options(/MP)
+endif()
 
-add_subdirectory(dep)
+
+set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
+set(CURL_INSTALL OFF CACHE BOOL "" FORCE)
+set(ZSTD_INSTALL_LIBS OFF CACHE BOOL "" FORCE)
+set(ZSTD_INSTALL_PKGCONFIG OFF CACHE BOOL "" FORCE)
+
+add_subdirectory(dep EXCLUDE_FROM_ALL)
 
 if (WIN32)
     add_library(fuse3 SHARED IMPORTED)
@@ -106,3 +115,15 @@ target_link_libraries(rbun-merge PRIVATE rlib)
 
 add_executable(rbun-usage src/rbun_usage.cpp)
 target_link_libraries(rbun-usage PRIVATE rlib)
+
+
+find_package(pybind11 CONFIG REQUIRED)
+pybind11_add_module(rman_py src/bindings.cpp)
+if (WIN32)
+    target_link_libraries(rman_py PRIVATE rlib fuse3)
+else()
+
+    target_link_libraries(rman_py PRIVATE rlib fuse3)
+endif()
+
+install(TARGETS rman_py LIBRARY DESTINATION .)
